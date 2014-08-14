@@ -1,0 +1,14 @@
+# Managed by Puppet: /modules/softec_apt/templates/sources.list.erb
+<% if lsbdistcodename != 'hardy' then -%>
+deb http://archive.ubuntu.com/ubuntu/ <%= lsbdistcodename %> main restricted universe
+deb-src http://archive.ubuntu.com/ubuntu/ <%= lsbdistcodename %> main restricted universe
+
+deb http://archive.ubuntu.com/ubuntu/ <%= lsbdistcodename %>-updates main restricted universe
+deb-src http://archive.ubuntu.com/ubuntu/ <%= lsbdistcodename %>-updates main restricted universe
+
+deb http://security.ubuntu.com/ubuntu <%= lsbdistcodename %>-security main restricted universe
+deb-src http://security.ubuntu.com/ubuntu <%= lsbdistcodename %>-security main restricted universe
+
+deb http://archive.canonical.com/ubuntu <%= lsbdistcodename %> partner
+deb-src http://archive.canonical.com/ubuntu <%= lsbdistcodename %> partner
+<% end -%>
