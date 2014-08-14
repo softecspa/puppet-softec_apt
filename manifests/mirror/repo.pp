@@ -48,7 +48,7 @@ define softec_apt::mirror::repo(
       class{'softec_apt::mirror::key': }
     }
 
-    apt_puppetlabs::source {$title:
+    apt::source {$title:
       location  => "http://${::apt_mirror_url}/${url}${path}",
       repos     => 'main',
       release   => $real_release,
@@ -57,7 +57,7 @@ define softec_apt::mirror::repo(
     }
 
     if $priority {
-      apt_puppetlabs::pin {$name:
+      apt::pin {$name:
         priority  => $priority,
         release   => $name,
         packages  => '*'

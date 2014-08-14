@@ -31,7 +31,7 @@
 define softec_apt::ppa(
   $ensure=present,
   $release= $::lsbdistcodename,
-  $options= $apt_puppetlabs::params::ppa_options,
+  $options= $apt::params::ppa_options,
   $priority=400,
   $key=false,
   $mirror=false,
@@ -48,7 +48,7 @@ define softec_apt::ppa(
   }
 
   if $key {
-    apt_puppetlabs::key{ $key: }
+    apt::key{ $key: }
   }
 
   if $mirror and $mirror_name {
@@ -74,13 +74,13 @@ define softec_apt::ppa(
     }
 
   } else  {
-    apt_puppetlabs::ppa {"ppa:$name":
+    apt::ppa {"ppa:$name":
       ensure  => $ensure,
       release => $release,
       options => $options
     }
     if $priority {
-      apt_puppetlabs::pin {$name:
+      apt::pin {$name:
         priority  => $priority,
         release   => $name,
         packages  => '*'

@@ -4,7 +4,7 @@ class softec_apt::proxy (
   $port       = '3142'
 ) {
 
-  apt_puppetlabs::conf{'proxy':
+  apt::conf{'proxy':
     priority  => $priority,
     content   => "Acquire::http { Proxy \"${proxy}:${port}\"; };",
   }
