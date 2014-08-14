@@ -18,7 +18,7 @@ class softec_apt::mirror::server (
   }
 
   concat_fragment { "apt-mirror-list+00000.tmp":
-    content => template('apt/mirror.list.erb'),
+    content => template('softec_apt/mirror.list.erb'),
   }
 
   Softec_apt::Mirror::Export_repo <<| mirror_tag == $mirror_tag |>>
