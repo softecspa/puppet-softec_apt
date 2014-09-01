@@ -7,24 +7,24 @@ class softec_apt::main_source_list {
     purge_preferences     => true,
   }
 
-  apt::source {'lucid':
+  apt::source {$::lsbdistcodename:
     location  => 'http://archive.ubuntu.com/ubuntu/',
     repos     => 'main restricted universe'
   }
 
-  apt::source {'lucid-updates':
+  apt::source {"${::lsbdistcodename}-updates":
     location  => 'http://archive.ubuntu.com/ubuntu/',
-    release   => 'lucid-updates',
+    release   => "${::lsbdistcodename}-updates",
     repos     => 'main restricted universe',
   }
 
-  apt::source {'lucid-security':
+  apt::source {"${::lsbdistcodename}-security":
     location  => 'http://security.ubuntu.com/ubuntu',
-    release   => 'lucid-security',
+    release   => "${::lsbdistcodename}-security",
     repos     => 'main restricted universe',
   }
 
-  apt::source {'lucid-partner':
+  apt::source {"${::lsbdistcodename}-partner":
     location  => 'http://archive.canonical.com/ubuntu',
     repos     => 'partner',
   }
