@@ -32,5 +32,11 @@ define softec_apt::mirror::export_repo(
     'tag' => $mirror_tag,
     'content' => template('softec_apt/mirror_repo.erb')
   }
-  ensure_resource('concat_fragment', "apt-mirror-list+${url}-${p}-${real_release}.tmp", $params)
+  
+  if ($::lsbdistrelease < '10.04') {
+    notify { 'apt-mirror is not supported in release out of maintenance': }
+  } else {
+    ensure_resource('concat_fragment', "apt-mirror-list+${url}-${p}-${real_release}.tmp", $params)
+  }
+
 }
