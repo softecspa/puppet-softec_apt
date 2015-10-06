@@ -12,7 +12,7 @@
 #   url of the repository to mirror (ex: ppa.launchpad.net)
 #
 # [*path*]
-#   path of the repo to mirror (ex: /ondrej/php5-oldstable/ubuntu)
+#   path of the original repo to mirror (ex: /ondrej/php5-oldstable/ubuntu), default: _empty_
 #
 # [*release*]
 #   Force a release, if not specified $lsbcoderelease is taken
@@ -30,17 +30,21 @@
 #   Tag used to export the resource (differentiate if you want more mirror). Default: apt-mirror
 #
 define softec_apt::mirror::repo(
-  $title,
   $url,
-  $path="",
-  $release="",
-  $priority=500,
-  $enable=false,
-  $export=true,
-  $export_tag='apt-mirror'
+  $title = $name,
+  $path = '',
+  $release = '',
+  $repos = 'main',
+  $include_src = false,
+  $priority = 500,
+  $enable = false,
+  $export = true,
+  $export_tag = 'apt-mirror'
 ) {
 
   $real_release = $release ? { '' => $lsbdistcodename, default => $release }
+
+  # TODO: not used variable?
   $p = regsubst($path,'/','_', 'G')
 
   if $enable {
@@ -48,16 +52,16 @@ define softec_apt::mirror::repo(
       class{'softec_apt::mirror::key': }
     }
 
-    apt::source {$title:
+    apt::source { "mirror-${title}":
       location  => "http://${::apt_mirror_url}/${url}${path}",
-      repos     => 'main',
+      repos     => $repos,
       release   => $real_release,
       require   => Class['softec_apt::mirror::key'],
-      include_src => false,
+      include_src => $include_src,
     }
 
     if $priority {
-      apt::pin {$name:
+      apt::pin { $name:
         priority  => $priority,
         release   => $name,
         packages  => '*'
