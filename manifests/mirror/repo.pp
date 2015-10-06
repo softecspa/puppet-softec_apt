@@ -31,7 +31,7 @@
 #
 define softec_apt::mirror::repo(
   $url,
-  $title = $name,
+  $title = undef,
   $path = '',
   $release = '',
   $repos = 'main',
@@ -43,6 +43,7 @@ define softec_apt::mirror::repo(
 ) {
 
   $real_release = $release ? { '' => $lsbdistcodename, default => $release }
+  $real_title = $title ? { undef => $name, default => $title }
 
   # TODO: not used variable?
   $p = regsubst($path,'/','_', 'G')
@@ -52,7 +53,7 @@ define softec_apt::mirror::repo(
       class{'softec_apt::mirror::key': }
     }
 
-    apt::source { "mirror-${title}":
+    apt::source { "mirror-${real_title}":
       location  => "http://${::apt_mirror_url}/${url}${path}",
       repos     => $repos,
       release   => $real_release,
@@ -70,7 +71,7 @@ define softec_apt::mirror::repo(
   }
 
   if $export {
-    @@softec_apt::mirror::export_repo { "${title}##${hostname}":
+    @@softec_apt::mirror::export_repo { "${real_title}##${hostname}":
       url => $url,
       path => $path,
       release => $real_release,
