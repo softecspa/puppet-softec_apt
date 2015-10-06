@@ -31,6 +31,7 @@
 #
 define softec_apt::mirror::repo(
   $url,
+  $title,
   $path = '',
   $release = '',
   $repos = 'main',
@@ -42,7 +43,7 @@ define softec_apt::mirror::repo(
 ) {
 
   $real_release = $release ? { '' => $lsbdistcodename, default => $release }
-  #$real_title = $title ? { undef => $name, default => $title }
+  $real_title = $title ? { '' => $name, default => $title }
 
   # TODO: not used variable?
   $p = regsubst($path,'/','_', 'G')
