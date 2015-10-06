@@ -9,7 +9,7 @@
 #   title of the resource
 #
 # [*url*]
-#   url of the repository to mirror (ex: ppa.launchpad.net)
+#   url of the repository to mirror (ex: ppa.launchpad.net, without http:// prefix)
 #
 # [*path*]
 #   path of the original repo to mirror (ex: /ondrej/php5-oldstable/ubuntu), default: _empty_
