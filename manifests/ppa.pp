@@ -64,7 +64,7 @@ define softec_apt::ppa(
   validate_re($ppa_path, '[a-z][a-z0-9]+', "Invalid PPA path: $ppa_path")
 
   if $mirror {
-    $ppa_source_list = "mirror-${ppa_user}-${ppa_path}-${lsbdistcodename}"
+    $ppa_source_list = "${ppa_user}-${ppa_path}-${lsbdistcodename}"
     softec_apt::mirror::repo { $ppa_source_list:
       title     => $ppa_source_list,
       priority  => $priority,
