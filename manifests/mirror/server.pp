@@ -45,6 +45,7 @@ class softec_apt::mirror::server (
     require =>  File['/usr/local/bin/dpkgrepo.py'],
   }
 
+  # Questo esegue apt-mirror e poi fa dpkgrepo.py per ricreare gli indici e le firme
   file { '/usr/local/bin/apt-mirror-wrapper.sh':
     ensure  => present,
     mode    => 0755,
@@ -61,7 +62,7 @@ class softec_apt::mirror::server (
     ensure  => 'present',
     command => '/usr/local/bin/apt-mirror-wrapper.sh',
     user    => 'apt-mirror',
-    hour    => '16',
+    hour    => '*',
     minute  => '0',
     require => [
       Package['apt-mirror'],
