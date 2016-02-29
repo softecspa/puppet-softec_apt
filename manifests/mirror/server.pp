@@ -49,7 +49,7 @@ class softec_apt::mirror::server (
   }->
   cron::customentry { 'apt-mirror':
     ensure  => 'present',
-    command => '/usr/local/bin/apt-mirror-wrapper.sh',
+    command => '/usr/local/bin/solo -port=61235 /usr/local/bin/apt-mirror-wrapper.sh',
     user    => 'apt-mirror',
     special => 'hourly'
   }
