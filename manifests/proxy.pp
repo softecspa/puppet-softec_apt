@@ -5,8 +5,8 @@ class softec_apt::proxy (
 ) {
 
   apt::conf{'proxy':
-    priority  => $priority,
-    content   => "Acquire::http { Proxy \"${proxy}:${port}\"; };",
+    priority => $priority,
+    content  => "Acquire::http { Proxy \"${proxy}:${port}\"; };",
   }
 
 }

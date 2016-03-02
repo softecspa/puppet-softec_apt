@@ -40,11 +40,11 @@ define softec_apt::ppa(
 )
 {
   if $lsbdistid != 'Ubuntu' {
-    fail "Module $module_name is not compatible with distro $lsbdistid"
+    fail "Module ${module_name} is not compatible with distro ${lsbdistid}"
   }
 
   if ! $key and ! $mirror  {
-    fail "One between key and mirror should be enabled!"
+    fail 'One between key and mirror should be enabled!'
   }
 
   if $key {
@@ -60,30 +60,30 @@ define softec_apt::ppa(
   validate_array($ppa_details)
   $ppa_user = $ppa_details[0]
   $ppa_path = $ppa_details[1]
-  validate_re($ppa_user, '[a-z][a-z0-9]+', "Invalid PPA user name: $ppa_user")
-  validate_re($ppa_path, '[a-z][a-z0-9]+', "Invalid PPA path: $ppa_path")
+  validate_re($ppa_user, '[a-z][a-z0-9]+', "Invalid PPA user name: ${ppa_user}")
+  validate_re($ppa_path, '[a-z][a-z0-9]+', "Invalid PPA path: ${ppa_path}")
 
   if $mirror {
     $ppa_source_list = "${ppa_user}-${ppa_path}-${lsbdistcodename}"
     softec_apt::mirror::repo { $ppa_source_list:
-      title     => $ppa_source_list,
-      priority  => $priority,
-      url       => "ppa.launchpad.net",
-      path      => "/${ppa_user}/${ppa_path}/ubuntu",
-      enable    => true
+      title    => $ppa_source_list,
+      priority => $priority,
+      url      => 'ppa.launchpad.net',
+      path     => "/${ppa_user}/${ppa_path}/ubuntu",
+      enable   => true
     }
 
   } else  {
-    apt::ppa {"ppa:$name":
+    apt::ppa {"ppa:${name}":
       ensure  => $ensure,
       release => $release,
       options => $options
     }
     if $priority {
       apt::pin {$name:
-        priority  => $priority,
-        release   => $name,
-        packages  => '*'
+        priority => $priority,
+        release  => $name,
+        packages => '*'
       }
     }
   }

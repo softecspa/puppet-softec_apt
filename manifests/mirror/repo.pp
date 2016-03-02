@@ -54,27 +54,27 @@ define softec_apt::mirror::repo(
     }
 
     apt::source { "mirror-${real_title}":
-      location  => "http://${::apt_mirror_url}/${url}${path}",
-      repos     => $repos,
-      release   => $real_release,
-      require   => Class['softec_apt::mirror::key'],
+      location    => "http://${::apt_mirror_url}/${url}${path}",
+      repos       => $repos,
+      release     => $real_release,
+      require     => Class['softec_apt::mirror::key'],
       include_src => $include_src,
     }
 
     if $priority {
       apt::pin { $name:
-        priority  => $priority,
-        release   => $name,
-        packages  => '*'
+        priority => $priority,
+        release  => $name,
+        packages => '*'
       }
     }
   }
 
   if $export {
     @@softec_apt::mirror::export_repo { "${real_title}##${hostname}":
-      url => $url,
-      path => $path,
-      release => $real_release,
+      url        => $url,
+      path       => $path,
+      release    => $real_release,
       mirror_tag => $export_tag
     }
   }
